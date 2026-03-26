@@ -249,10 +249,10 @@
   .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
   .hero-stats {
-    position: absolute;
-    right: 48px; bottom: 80px;
+    position: relative;
     display: flex; gap: 48px;
     z-index: 2;
+    margin-top: 40px;
     animation: fadeUp 0.8s ease 0.6s both;
   }
   .stat { text-align: center; }
@@ -709,6 +709,204 @@
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ====== HAMBURGER MENU ====== */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px; height: 2px;
+    background: var(--white);
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav drawer */
+  .mobile-nav {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(8,8,8,0.98);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .mobile-nav a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+    padding: 12px 0;
+    transition: color 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    width: 80%;
+    text-align: center;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover, .mobile-nav a:active { color: var(--gold); }
+  .mobile-nav .mobile-cta {
+    margin-top: 32px;
+    background: var(--gold);
+    color: var(--black) !important;
+    font-size: 20px;
+    padding: 16px 48px;
+    border-bottom: none !important;
+  }
+
+  /* ====== TABLET: 768px–1024px ====== */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 28px; }
+    .nav-links { gap: 24px; }
+    .hero-content { padding: 0 28px 80px; }
+    .hero-stats { right: 28px; bottom: 60px; gap: 32px; }
+    .stat-num { font-size: 36px; }
+    section { padding: 80px 28px; }
+    .cars-grid { grid-template-columns: repeat(2, 1fr); }
+    .car-card:first-child { grid-column: span 2; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid .testimonial:last-child { grid-column: span 2; }
+  }
+
+  /* ====== MOBILE: ≤768px ====== */
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+
+    /* Nav */
+    nav { padding: 18px 20px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+
+    /* Hero */
+    .hero { height: 100svh; align-items: flex-end; }
+    .hero-car {
+      right: -10%;
+      bottom: 30%;
+      width: 110%;
+      opacity: 0.35;
+    }
+    .hero-content {
+      padding: 0 20px 40px;
+      max-width: 100%;
+      width: 100%;
+    }
+    .hero-title { font-size: clamp(64px, 18vw, 100px); }
+    .hero-subtitle { font-size: 14px; max-width: 100%; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+    .btn-primary, .btn-ghost { text-align: center; padding: 14px 24px; }
+    .hero-stats {
+      position: static;
+      display: flex;
+      justify-content: space-between;
+      gap: 0;
+      padding: 20px 20px 0;
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .stat-num { font-size: 32px; }
+    .stat-label { font-size: 9px; }
+
+    /* Sections */
+    section { padding: 64px 20px; }
+    .section-title { font-size: clamp(40px, 12vw, 64px); }
+
+    /* Cars */
+    .cars-section { padding: 64px 20px; }
+    .cars-header { flex-direction: column; align-items: flex-start; gap: 24px; margin-bottom: 32px; }
+    .filter-tabs { width: 100%; justify-content: stretch; }
+    .filter-tab { flex: 1; text-align: center; padding: 10px 8px; font-size: 11px; }
+    .cars-grid { grid-template-columns: 1fr; gap: 2px; }
+    .car-card:first-child { grid-column: span 1; min-height: 280px; }
+    .car-card { aspect-ratio: 16/9; min-height: 220px; }
+    .car-name { font-size: 24px; }
+    .car-price { font-size: 16px; }
+    .car-card-body { padding: 18px; }
+
+    /* Brands */
+    .brands-section { padding: 56px 20px; }
+    .brands-row { gap: 28px; }
+    .brand-logo { font-size: 16px; }
+
+    /* Why section — stack vertically */
+    #about {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 48px !important;
+      padding: 64px 20px !important;
+    }
+    #about > div:first-child { width: 100%; }
+    #about > div:first-child > div { height: 300px !important; position: relative; }
+    #about > div:first-child > div > div:last-child {
+      bottom: -16px !important;
+      right: -8px !important;
+      width: 130px !important;
+      height: 130px !important;
+    }
+    #about > div:first-child > div > div:last-child > div:first-child { font-size: 40px !important; }
+    .features-list { margin-top: 32px; }
+    .feature { padding: 20px 0; gap: 16px; }
+
+    /* Testimonials */
+    .testimonials-section { padding: 64px 20px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 2px; margin-top: 40px; }
+    .testimonials-grid .testimonial:last-child { grid-column: span 1; }
+    .testimonial { padding: 28px 24px; }
+
+    /* CTA Band */
+    .cta-band {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 56px 20px;
+      gap: 28px;
+    }
+    .cta-band-title { font-size: clamp(40px, 14vw, 64px); }
+    .cta-band-actions { flex-direction: column; width: 100%; }
+    .btn-dark, .btn-outline-dark { text-align: center; padding: 16px 24px; width: 100%; }
+
+    /* Footer */
+    footer { padding: 56px 20px 32px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; margin-bottom: 40px; }
+    .footer-desc { max-width: 100%; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+    /* WhatsApp FAB */
+    .whatsapp-fab { bottom: 20px; right: 20px; width: 52px; height: 52px; }
+
+    /* Marquee */
+    .marquee-track span { font-size: 14px; padding: 0 20px; }
+  }
+
+  /* ====== SMALL MOBILE: ≤400px ====== */
+  @media (max-width: 400px) {
+    .hero-title { font-size: clamp(52px, 16vw, 80px); }
+    .mobile-nav a { font-size: 40px; }
+    .stat-num { font-size: 26px; }
+    .stat-label { font-size: 8px; letter-spacing: 0.1em; }
+  }
 </style>
 </head>
 <body>
@@ -722,6 +920,15 @@
   <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#inventory" class="mobile-link">Inventory</a>
+  <a href="#brands" class="mobile-link">Brands</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="https://wa.me/212600000000" class="mobile-cta mobile-link">Sell My Car</a>
+</div>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">CAR<span>HUB</span>.MA</a>
@@ -733,6 +940,9 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="https://wa.me/212600000000" class="nav-cta">Sell My Car</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -783,20 +993,19 @@
       <a href="#inventory" class="btn-primary">Browse Inventory</a>
       <a href="#contact" class="btn-ghost">Book Test Drive</a>
     </div>
-  </div>
-
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">200+</div>
-      <div class="stat-label">Cars Available</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">98%</div>
-      <div class="stat-label">Satisfied Clients</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">5★</div>
-      <div class="stat-label">Google Rating</div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Cars Available</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Satisfied Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Google Rating</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1145,7 +1354,7 @@
       <ul>
         <li><a href="#">📍 Casablanca, Maroc</a></li>
         <li><a href="tel:+212600000000">📞 +212 600 000 000</a></li>
-        <li><a href="mailto:contact@carhub.ma">✉ contact@carhub.ma</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#53303c3d27323027133032213b26317d3e32">✉ <span class="__cf_email__" data-cfemail="c8aba7a6bca9abbc88aba9baa0bdaae6a5a9">[email&#160;protected]</span></a></li>
         <li><a href="#">Mon–Sat 9am–7pm</a></li>
       </ul>
     </div>
@@ -1156,7 +1365,23 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -1203,14 +1428,4 @@
   // Filter tabs
   document.querySelectorAll('.filter-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-    });
-  });
-
-  // Marquee duplicate
-  const track = document.querySelector('.marquee-track');
-  track.innerHTML += track.innerHTML;
-</script>
-</body>
-</html>
+      document.querySelectorAll('.filter-tab').
