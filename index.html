@@ -4,1343 +4,928 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CAR HUB MA — Premium Auto Casablanca</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Barlow+Condensed:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --black: #080808;
-    --carbon: #0f0f0f;
-    --dark: #161616;
-    --gold: #ff6a00;
-    --gold-light: #ff8c33;
-    --silver: #a8a8a8;
-    --white: #f5f5f5;
-    --red: #d42b2b;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Barlow', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    width: 10px; height: 10px;
-    background: var(--gold);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transition: all 0.25s ease;
-    opacity: 0.6;
-  }
-  body:hover .cursor, body:hover .cursor-ring { opacity: 1; }
-
-  /* ====== NAV ====== */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 24px 48px;
-    background: linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, transparent 100%);
-    backdrop-filter: blur(4px);
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 0.12em;
-    color: var(--white);
-    text-decoration: none;
-  }
-  .logo span { color: var(--gold); }
-
-  .nav-links {
-    display: flex; gap: 40px; list-style: none;
-  }
-  .nav-links a {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--silver);
-    text-decoration: none;
-    transition: color 0.2s;
-    position: relative;
-  }
-  .nav-links a::after {
-    content: '';
-    position: absolute; bottom: -4px; left: 0;
-    width: 0; height: 1px;
-    background: var(--gold);
-    transition: width 0.3s ease;
-  }
-  .nav-links a:hover { color: var(--white); }
-  .nav-links a:hover::after { width: 100%; }
-
-  .nav-cta {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--gold);
-    padding: 10px 24px;
-    border: none;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.2s;
-  }
-  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-  /* ====== HERO ====== */
-  .hero {
-    height: 100vh;
-    position: relative;
-    display: flex; align-items: flex-end;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse at 60% 40%, rgba(255,106,0,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse at 10% 80%, rgba(255,106,0,0.06) 0%, transparent 50%),
-      linear-gradient(135deg, #080808 0%, #111111 50%, #080808 100%);
-  }
-
-  /* Grid lines */
-  .hero-bg::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,106,0,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,106,0,0.06) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
-  }
-
-  .hero-car {
-    position: absolute;
-    right: -5%;
-    bottom: 8%;
-    width: 72%;
-    max-width: 900px;
-    animation: floatCar 6s ease-in-out infinite;
-    filter: drop-shadow(0 40px 80px rgba(255,106,0,0.2));
-  }
-
-  @keyframes floatCar {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-18px); }
-  }
-
-  /* Decorative line */
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 0 48px 80px;
-    max-width: 600px;
-  }
-
-  .hero-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 20px;
-    display: flex; align-items: center; gap: 16px;
-    animation: fadeUp 0.8s ease both;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 40px; height: 1px;
-    background: var(--gold);
-    flex-shrink: 0;
-  }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(72px, 10vw, 140px);
-    line-height: 0.9;
-    letter-spacing: 0.02em;
-    color: var(--white);
-    animation: fadeUp 0.8s ease 0.15s both;
-  }
-  .hero-title em {
-    font-style: normal;
-    color: var(--gold);
-    display: block;
-  }
-
-  .hero-subtitle {
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--silver);
-    line-height: 1.7;
-    margin-top: 24px;
-    max-width: 380px;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
-  .hero-actions {
-    display: flex; gap: 16px; align-items: center;
-    margin-top: 40px;
-    animation: fadeUp 0.8s ease 0.45s both;
-  }
-
-  .btn-primary {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--gold);
-    padding: 16px 36px;
-    border: none;
-    text-decoration: none;
-    transition: all 0.25s;
-    display: inline-block;
-  }
-  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,106,0,0.3); }
-
-  .btn-ghost {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--white);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 16px 36px;
-    text-decoration: none;
-    transition: all 0.25s;
-    display: inline-block;
-  }
-  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-  .hero-stats {
-    position: relative;
-    display: flex; gap: 48px;
-    z-index: 2;
-    margin-top: 40px;
-    animation: fadeUp 0.8s ease 0.6s both;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--silver);
-    margin-top: 4px;
-  }
-
-  /* ====== MARQUEE ====== */
-  .marquee-section {
-    background: var(--gold);
-    padding: 14px 0;
-    overflow: hidden;
-  }
-  .marquee-track {
-    display: flex;
-    animation: marquee 20s linear infinite;
-    white-space: nowrap;
-  }
-  .marquee-track span {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 0.2em;
-    color: var(--black);
-    padding: 0 32px;
-  }
-  .marquee-track span.dot { color: rgba(8,8,8,0.3); padding: 0 8px; }
-  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-  /* ====== SECTION SHARED ====== */
-  section { padding: 120px 48px; }
-
-  .section-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 16px;
-  }
-  .section-eyebrow::before {
-    content: '';
-    width: 32px; height: 1px;
-    background: var(--gold);
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 6vw, 88px);
-    line-height: 0.95;
-    letter-spacing: 0.03em;
-    color: var(--white);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ====== CARS GRID ====== */
-  .cars-section { background: var(--carbon); }
-  .cars-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 64px;
-  }
-
-  .filter-tabs {
-    display: flex; gap: 4px;
-    background: var(--dark);
-    padding: 4px;
-  }
-  .filter-tab {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--silver);
-    padding: 10px 20px;
-    border: none;
-    background: transparent;
-    cursor: none;
-    transition: all 0.2s;
-  }
-  .filter-tab.active, .filter-tab:hover {
-    background: var(--gold);
-    color: var(--black);
-  }
-
-  .cars-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-
-  .car-card {
-    background: var(--dark);
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-    display: flex; flex-direction: column; justify-content: flex-end;
-  }
-  .car-card:first-child {
-    grid-column: span 2;
-    aspect-ratio: auto;
-    min-height: 420px;
-  }
-
-  .car-img-placeholder {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.6s ease;
-  }
-  .car-card:hover .car-img-placeholder { transform: scale(1.05); }
-
-  /* Car silhouette SVGs inline */
-  .car-card-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, transparent 60%);
-  }
-
-  .car-card-body {
-    position: relative; z-index: 2;
-    padding: 28px;
-  }
-  .car-badge {
-    display: inline-block;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    background: var(--gold);
-    color: var(--black);
-    padding: 4px 12px;
-    margin-bottom: 12px;
-  }
-  .car-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    letter-spacing: 0.05em;
-    color: var(--white);
-    line-height: 1;
-  }
-  .car-details {
-    display: flex; gap: 20px; align-items: center;
-    margin-top: 8px;
-  }
-  .car-year {
-    font-size: 13px; color: var(--silver); font-weight: 400;
-  }
-  .car-price {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--gold);
-    margin-left: auto;
-  }
-
-  /* car bg colors */
-  .bg1 { background: linear-gradient(135deg, #0f0f0f 0%, #1a0e05 100%); }
-  .bg2 { background: linear-gradient(135deg, #0f0f14 0%, #1a1a1f 100%); }
-  .bg3 { background: linear-gradient(135deg, #110a05 0%, #160f08 100%); }
-  .bg4 { background: linear-gradient(135deg, #080a0e 0%, #0c1016 100%); }
-
-  /* ====== WHY US ====== */
-  .why-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    background: var(--black);
-  }
-
-  .why-visual {
-    position: relative;
-    height: 600px;
-  }
-  .why-visual-main {
-    position: absolute;
-    inset: 0;
-    background: var(--dark);
-    overflow: hidden;
-  }
-  .why-visual-main::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, transparent 50%, rgba(255,106,0,0.08));
-  }
-
-  .why-accent-box {
-    position: absolute;
-    bottom: -24px; right: -24px;
-    width: 200px; height: 200px;
-    background: var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column;
-  }
-  .why-accent-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 64px;
-    color: var(--black);
-    line-height: 1;
-  }
-  .why-accent-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--black);
-    text-align: center;
-    padding: 0 16px;
-  }
-
-  .features-list { margin-top: 48px; }
-  .feature {
-    display: flex; gap: 24px; align-items: flex-start;
-    padding: 28px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .feature:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
-  .feature-icon {
-    width: 48px; height: 48px;
-    background: rgba(255,106,0,0.1);
-    border: 1px solid rgba(255,106,0,0.2);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-size: 20px;
-  }
-  .feature-text h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--white);
-    margin-bottom: 6px;
-  }
-  .feature-text p {
-    font-size: 14px;
-    color: var(--silver);
-    line-height: 1.6;
-  }
-
-  /* ====== BRANDS ====== */
-  .brands-section {
-    background: var(--carbon);
-    padding: 80px 48px;
-    text-align: center;
-  }
-  .brands-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px; font-weight: 700;
-    letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--silver); margin-bottom: 48px;
-  }
-  .brands-row {
-    display: flex; justify-content: center; align-items: center;
-    gap: 64px; flex-wrap: wrap;
-  }
-  .brand-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.15em;
-    color: rgba(184,184,176,0.3);
-    transition: color 0.3s;
-  }
-  .brand-logo:hover { color: var(--gold); }
-
-  /* ====== TESTIMONIALS ====== */
-  .testimonials-section { background: var(--dark); }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 64px;
-  }
-  .testimonial {
-    background: var(--carbon);
-    padding: 40px;
-    position: relative;
-  }
-  .testimonial::before {
-    content: '"';
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 120px;
-    color: var(--gold);
-    opacity: 0.15;
-    position: absolute;
-    top: -10px; left: 20px;
-    line-height: 1;
-  }
-  .testimonial-text {
-    font-size: 15px;
-    color: var(--silver);
-    line-height: 1.8;
-    margin-bottom: 28px;
-    position: relative;
-  }
-  .testimonial-author {
-    display: flex; align-items: center; gap: 16px;
-  }
-  .testimonial-avatar {
-    width: 44px; height: 44px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    color: var(--black);
-  }
-  .testimonial-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px; font-weight: 700;
-    letter-spacing: 0.05em; text-transform: uppercase;
-    color: var(--white);
-  }
-  .testimonial-city { font-size: 13px; color: var(--silver); }
-
-  /* ====== CTA BAND ====== */
-  .cta-band {
-    background: var(--gold);
-    padding: 80px 48px;
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 40px;
-  }
-  .cta-band-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(40px, 5vw, 72px);
-    color: var(--black);
-    line-height: 0.95;
-    letter-spacing: 0.03em;
-  }
-  .cta-band-actions { display: flex; gap: 16px; flex-shrink: 0; }
-  .btn-dark {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--white);
-    background: var(--black);
-    padding: 18px 40px;
-    border: none;
-    text-decoration: none;
-    transition: all 0.2s;
-    display: inline-block;
-  }
-  .btn-dark:hover { background: var(--carbon); transform: translateY(-2px); }
-  .btn-outline-dark {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700; font-size: 14px;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--black);
-    border: 2px solid var(--black);
-    padding: 16px 40px;
-    text-decoration: none; display: inline-block;
-    transition: all 0.2s;
-  }
-  .btn-outline-dark:hover { background: var(--black); color: var(--gold); }
-
-  /* ====== FOOTER ====== */
-  footer {
-    background: var(--carbon);
-    padding: 80px 48px 40px;
-    border-top: 1px solid rgba(255,106,0,0.2);
-  }
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 64px;
-    margin-bottom: 64px;
-  }
-  .footer-brand .logo { font-size: 36px; display: block; margin-bottom: 16px; }
-  .footer-desc { font-size: 14px; color: var(--silver); line-height: 1.7; max-width: 280px; }
-  .footer-social { display: flex; gap: 12px; margin-top: 24px; }
-  .social-btn {
-    width: 40px; height: 40px;
-    border: 1px solid rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--silver); font-size: 16px;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .social-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(255,106,0,0.1); }
-
-  .footer-col h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px; font-weight: 700;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 24px;
-  }
-  .footer-col ul { list-style: none; }
-  .footer-col li { margin-bottom: 12px; }
-  .footer-col a {
-    font-size: 14px; color: var(--silver);
-    text-decoration: none; transition: color 0.2s;
-  }
-  .footer-col a:hover { color: var(--white); }
-
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 32px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .footer-copy { font-size: 13px; color: rgba(184,184,176,0.4); }
-
-  /* ====== WHATSAPP BTN ====== */
-  .whatsapp-fab {
-    position: fixed; bottom: 32px; right: 32px;
-    z-index: 50;
-    width: 56px; height: 56px;
-    background: #25d366;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 24px rgba(37,211,102,0.4);
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    animation: fabPulse 3s ease-in-out infinite;
-  }
-  .whatsapp-fab:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
-  @keyframes fabPulse {
-    0%, 100% { box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
-    50% { box-shadow: 0 8px 40px rgba(37,211,102,0.7); }
-  }
-  .whatsapp-fab svg { width: 28px; height: 28px; }
-
-  /* ====== Scroll animation helper ====== */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-
-  /* ====== HAMBURGER MENU ====== */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    z-index: 200;
-    background: none;
-    border: none;
-  }
-  .hamburger span {
-    display: block;
-    width: 26px; height: 2px;
-    background: var(--white);
-    transition: all 0.3s ease;
-    transform-origin: center;
-  }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  /* Mobile nav drawer */
-  .mobile-nav {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(8,8,8,0.98);
-    z-index: 150;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    backdrop-filter: blur(12px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  .mobile-nav.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-  .mobile-nav a {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px;
-    letter-spacing: 0.08em;
-    color: var(--white);
-    text-decoration: none;
-    padding: 12px 0;
-    transition: color 0.2s;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    width: 80%;
-    text-align: center;
-  }
-  .mobile-nav a:last-child { border-bottom: none; }
-  .mobile-nav a:hover, .mobile-nav a:active { color: var(--gold); }
-  .mobile-nav .mobile-cta {
-    margin-top: 32px;
-    background: var(--gold);
-    color: var(--black) !important;
-    font-size: 20px;
-    padding: 16px 48px;
-    border-bottom: none !important;
-  }
-
-  /* ====== TABLET: 768px–1024px ====== */
-  @media (max-width: 1024px) {
-    nav { padding: 20px 28px; }
-    .nav-links { gap: 24px; }
-    .hero-content { padding: 0 28px 80px; }
-    .hero-stats { right: 28px; bottom: 60px; gap: 32px; }
-    .stat-num { font-size: 36px; }
-    section { padding: 80px 28px; }
-    .cars-grid { grid-template-columns: repeat(2, 1fr); }
-    .car-card:first-child { grid-column: span 2; }
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-    .testimonials-grid { grid-template-columns: 1fr 1fr; }
-    .testimonials-grid .testimonial:last-child { grid-column: span 2; }
-  }
-
-  /* ====== MOBILE: ≤768px ====== */
-  @media (max-width: 768px) {
-    body { cursor: auto; }
-    .cursor, .cursor-ring { display: none; }
-
-    /* Nav */
-    nav { padding: 18px 20px; }
-    .nav-links, .nav-cta { display: none; }
-    .hamburger { display: flex; }
-    .mobile-nav { display: flex; }
-
-    /* Hero */
-    .hero { height: 100svh; align-items: flex-end; }
-    .hero-car {
-      right: -10%;
-      bottom: 30%;
-      width: 110%;
-      opacity: 0.35;
-    }
-    .hero-content {
-      padding: 0 20px 40px;
-      max-width: 100%;
-      width: 100%;
-    }
-    .hero-title { font-size: clamp(64px, 18vw, 100px); }
-    .hero-subtitle { font-size: 14px; max-width: 100%; }
-    .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
-    .btn-primary, .btn-ghost { text-align: center; padding: 14px 24px; }
-    .hero-stats {
-      position: static;
-      display: flex;
-      justify-content: space-between;
-      gap: 0;
-      padding: 20px 20px 0;
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-    .stat-num { font-size: 32px; }
-    .stat-label { font-size: 9px; }
-
-    /* Sections */
-    section { padding: 64px 20px; }
-    .section-title { font-size: clamp(40px, 12vw, 64px); }
-
-    /* Cars */
-    .cars-section { padding: 64px 20px; }
-    .cars-header { flex-direction: column; align-items: flex-start; gap: 24px; margin-bottom: 32px; }
-    .filter-tabs { width: 100%; justify-content: stretch; }
-    .filter-tab { flex: 1; text-align: center; padding: 10px 8px; font-size: 11px; }
-    .cars-grid { grid-template-columns: 1fr; gap: 2px; }
-    .car-card:first-child { grid-column: span 1; min-height: 280px; }
-    .car-card { aspect-ratio: 16/9; min-height: 220px; }
-    .car-name { font-size: 24px; }
-    .car-price { font-size: 16px; }
-    .car-card-body { padding: 18px; }
-
-    /* Brands */
-    .brands-section { padding: 56px 20px; }
-    .brands-row { gap: 28px; }
-    .brand-logo { font-size: 16px; }
-
-    /* Why section — stack vertically */
-    #about {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 48px !important;
-      padding: 64px 20px !important;
-    }
-    #about > div:first-child { width: 100%; }
-    #about > div:first-child > div { height: 300px !important; position: relative; }
-    #about > div:first-child > div > div:last-child {
-      bottom: -16px !important;
-      right: -8px !important;
-      width: 130px !important;
-      height: 130px !important;
-    }
-    #about > div:first-child > div > div:last-child > div:first-child { font-size: 40px !important; }
-    .features-list { margin-top: 32px; }
-    .feature { padding: 20px 0; gap: 16px; }
-
-    /* Testimonials */
-    .testimonials-section { padding: 64px 20px; }
-    .testimonials-grid { grid-template-columns: 1fr; gap: 2px; margin-top: 40px; }
-    .testimonials-grid .testimonial:last-child { grid-column: span 1; }
-    .testimonial { padding: 28px 24px; }
-
-    /* CTA Band */
-    .cta-band {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 56px 20px;
-      gap: 28px;
-    }
-    .cta-band-title { font-size: clamp(40px, 14vw, 64px); }
-    .cta-band-actions { flex-direction: column; width: 100%; }
-    .btn-dark, .btn-outline-dark { text-align: center; padding: 16px 24px; width: 100%; }
-
-    /* Footer */
-    footer { padding: 56px 20px 32px; }
-    .footer-grid { grid-template-columns: 1fr; gap: 32px; margin-bottom: 40px; }
-    .footer-desc { max-width: 100%; }
-    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-
-    /* WhatsApp FAB */
-    .whatsapp-fab { bottom: 20px; right: 20px; width: 52px; height: 52px; }
-
-    /* Marquee */
-    .marquee-track span { font-size: 14px; padding: 0 20px; }
-  }
-
-  /* ====== SMALL MOBILE: ≤400px ====== */
-  @media (max-width: 400px) {
-    .hero-title { font-size: clamp(52px, 16vw, 80px); }
-    .mobile-nav a { font-size: 40px; }
-    .stat-num { font-size: 26px; }
-    .stat-label { font-size: 8px; letter-spacing: 0.1em; }
-  }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#060606;
+  --carbon:#0d0d0d;
+  --dark:#141414;
+  --panel:#1a1a1a;
+  --border:rgba(255,255,255,0.07);
+  --orange:#ff5500;
+  --orange2:#ff7a2e;
+  --orange-glow:rgba(255,85,0,0.18);
+  --silver:#888;
+  --muted:#555;
+  --white:#f0f0f0;
+  --glass:rgba(255,255,255,0.04);
+  --glass-border:rgba(255,255,255,0.09);
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cur{width:8px;height:8px;background:var(--orange);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform .12s,width .2s,height .2s;mix-blend-mode:normal}
+#cur-ring{width:32px;height:32px;border:1px solid rgba(255,85,0,.5);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:width .2s,height .2s,border-color .2s}
+body.hovering #cur{transform:scale(3);background:var(--orange2);opacity:.7}
+body.hovering #cur-ring{width:48px;height:48px;border-color:var(--orange)}
+@media(hover:none){#cur,#cur-ring{display:none}body{cursor:auto}}
+
+/* ===================== NAV ===================== */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(6,6,6,.92);backdrop-filter:blur(20px);border-color:var(--border)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.15em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:2px}
+.logo-dot{color:var(--orange)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s;position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--orange);transition:width .3s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-tel{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:500;letter-spacing:.08em;color:var(--silver);text-decoration:none;transition:color .2s}
+.nav-tel:hover{color:var(--orange)}
+.nav-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--black);background:var(--orange);padding:10px 22px;text-decoration:none;transition:all .25s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}
+.nav-btn:hover{background:var(--orange2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,85,0,.35)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--white);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* MOBILE DRAWER */
+.mob-nav{position:fixed;inset:0;background:rgba(6,6,6,.97);backdrop-filter:blur(16px);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;pointer-events:none;transition:opacity .35s}
+.mob-nav.open{opacity:1;pointer-events:all}
+.mob-nav a{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,10vw,60px);letter-spacing:.06em;color:var(--white);text-decoration:none;padding:10px 0;transition:color .2s;width:72%;text-align:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.mob-nav a:last-child{border:none}
+.mob-nav a:hover{color:var(--orange)}
+.mob-cta-link{margin-top:24px;background:var(--orange)!important;color:var(--black)!important;padding:14px 48px!important;font-size:22px!important;border-bottom:none!important}
+
+/* ===================== HERO ===================== */
+.hero{height:100svh;min-height:600px;position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:end;overflow:hidden}
+#heroCanvas{position:absolute;inset:0;z-index:0}
+.hero-left{position:relative;z-index:2;padding:0 0 80px 48px;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;background:rgba(255,85,0,.12);border:1px solid rgba(255,85,0,.3);padding:7px 16px;margin-bottom:28px;width:fit-content}
+.hero-tag-dot{width:6px;height:6px;background:var(--orange);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,85,0,.5)}50%{box-shadow:0 0 0 6px rgba(255,85,0,0)}}
+.hero-tag span{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)}
+h1.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,9.5vw,148px);line-height:.88;letter-spacing:.01em;color:var(--white);margin-bottom:24px}
+h1.hero-title .stroke{-webkit-text-stroke:1px var(--white);color:transparent}
+h1.hero-title .orange{color:var(--orange)}
+.hero-desc{font-size:15px;line-height:1.75;color:var(--silver);max-width:360px;margin-bottom:36px;font-weight:300}
+.hero-btns{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-fill{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--black);background:var(--orange);padding:15px 32px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .25s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}
+.btn-fill:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,85,0,.4)}
+.btn-fill svg{transition:transform .25s}
+.btn-fill:hover svg{transform:translateX(4px)}
+.btn-outline{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--white);border:1px solid rgba(255,255,255,.2);padding:14px 32px;text-decoration:none;display:inline-block;transition:all .25s}
+.btn-outline:hover{border-color:var(--orange);color:var(--orange)}
+
+.hero-right{position:relative;z-index:2;height:100%;display:flex;align-items:flex-end;padding-bottom:40px}
+.hero-car-wrap{position:relative;width:100%;padding-bottom:40px}
+.hero-car-svg{width:100%;filter:drop-shadow(0 0 60px rgba(255,85,0,.25));animation:carFloat 7s ease-in-out infinite}
+@keyframes carFloat{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-14px) rotate(.3deg)}66%{transform:translateY(-8px) rotate(-.2deg)}}
+.hero-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80%;height:40px;background:var(--orange);filter:blur(40px);opacity:.25;border-radius:50%}
+.hero-stats-bar{position:absolute;bottom:0;left:0;right:0;z-index:3;display:flex;align-items:stretch;border-top:1px solid var(--border)}
+.hero-stat{flex:1;padding:20px 28px;border-right:1px solid var(--border);background:rgba(6,6,6,.7);backdrop-filter:blur(12px);display:flex;flex-direction:column;gap:4px;transition:background .25s}
+.hero-stat:last-child{border-right:none}
+.hero-stat:hover{background:rgba(255,85,0,.06)}
+.hstat-num{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:.05em;color:var(--orange);line-height:1}
+.hstat-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.hero-scroll{position:absolute;bottom:88px;right:48px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:.5}
+.hero-scroll span{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--silver);writing-mode:vertical-rl}
+.hero-scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--orange),transparent);animation:scrollLine 2s ease-in-out infinite}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===================== MARQUEE ===================== */
+.ticker{overflow:hidden;background:var(--orange);padding:11px 0;border-top:1px solid rgba(0,0,0,.15)}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 18s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:.22em;color:var(--black);padding:0 28px;display:flex;align-items:center;gap:28px}
+.ticker-item::after{content:'◆';font-size:8px;opacity:.4}
+
+/* ===================== SEARCH BAR ===================== */
+.search-section{background:var(--carbon);padding:48px;border-bottom:1px solid var(--border)}
+.search-wrap{max-width:1100px;margin:0 auto}
+.search-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--orange);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.search-label::before{content:'';width:24px;height:1px;background:var(--orange)}
+.search-bar{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:2px;background:var(--border)}
+.search-field{background:var(--dark);padding:18px 22px;display:flex;flex-direction:column;gap:6px;border:1px solid transparent;transition:border-color .2s}
+.search-field:hover,.search-field:focus-within{border-color:rgba(255,85,0,.3);background:rgba(255,85,0,.04)}
+.search-field label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.search-field select,.search-field input{background:none;border:none;outline:none;font-family:'Inter',sans-serif;font-size:15px;font-weight:400;color:var(--white);width:100%;-webkit-appearance:none;cursor:pointer}
+.search-field select option{background:var(--dark)}
+.search-btn{background:var(--orange);color:var(--black);border:none;padding:0 36px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.12em;cursor:pointer;transition:background .2s,transform .2s;white-space:nowrap}
+.search-btn:hover{background:var(--orange2);transform:scaleX(1.02)}
+
+/* ===================== INVENTORY ===================== */
+.inventory{background:var(--carbon);padding:80px 48px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:24px}
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--orange)}
+h2.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5.5vw,80px);line-height:.92;letter-spacing:.02em;color:var(--white)}
+.filter-row{display:flex;gap:3px}
+.ftab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--silver);padding:10px 20px;background:var(--dark);border:1px solid transparent;cursor:pointer;transition:all .2s}
+.ftab:hover,.ftab.active{background:var(--orange);color:var(--black);border-color:var(--orange)}
+.cars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.car-card{background:var(--dark);position:relative;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
+.car-card:hover{transform:translateY(-4px);z-index:2;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.car-card.featured{grid-column:span 2}
+.car-vis{position:relative;overflow:hidden;background:var(--carbon)}
+.car-card.featured .car-vis{height:380px}
+.car-card:not(.featured) .car-vis{height:240px}
+.car-vis-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .6s ease}
+.car-card:hover .car-vis-bg{transform:scale(1.06)}
+.car-vis-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,20,20,.98) 0%,rgba(20,20,20,.1) 55%,transparent 100%)}
+.car-vis-top{position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:flex-start;z-index:2}
+.car-badge2{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:var(--orange);color:var(--black);padding:4px 10px}
+.car-km{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--silver);background:rgba(0,0,0,.5);backdrop-filter:blur(4px);padding:4px 10px;border:1px solid var(--border)}
+.car-body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+.car-brand{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--orange)}
+.car-name2{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.8vw,30px);letter-spacing:.04em;color:var(--white);line-height:1}
+.car-specs{display:flex;gap:16px;flex-wrap:wrap}
+.car-spec{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.car-spec svg{opacity:.6}
+.car-footer2{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border);margin-top:auto}
+.car-price2{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.05em;color:var(--orange)}
+.car-cta{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--black);background:var(--orange);padding:8px 16px;text-decoration:none;transition:background .2s;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s,background .2s}
+.car-card:hover .car-cta{opacity:1;transform:translateY(0)}
+.car-cta:hover{background:var(--orange2)}
+.view-all-wrap{text-align:center;margin-top:48px}
+.btn-ghost2{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,85,0,.4);padding:14px 40px;text-decoration:none;display:inline-block;transition:all .25s}
+.btn-ghost2:hover{background:rgba(255,85,0,.08);border-color:var(--orange)}
+
+/* ===================== BRANDS STRIP ===================== */
+.brands-strip{background:var(--black);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 48px}
+.brands-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center}
+.brand-pill{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.18em;color:rgba(255,255,255,.15);padding:12px 24px;border:1px solid rgba(255,255,255,.05);transition:all .3s;text-decoration:none}
+.brand-pill:hover{color:var(--orange);border-color:rgba(255,85,0,.3);background:rgba(255,85,0,.05)}
+
+/* ===================== PROCESS ===================== */
+.process{background:var(--black);padding:80px 48px}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:56px}
+.process-step{background:var(--dark);padding:40px 32px;position:relative;overflow:hidden;transition:background .3s}
+.process-step:hover{background:var(--panel)}
+.process-step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent);transform:scaleX(0);transition:transform .4s}
+.process-step:hover::before{transform:scaleX(1)}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:-.02em;color:rgba(255,85,0,.1);line-height:.9;margin-bottom:20px;transition:color .3s}
+.process-step:hover .step-num{color:rgba(255,85,0,.2)}
+.step-icon{width:44px;height:44px;background:rgba(255,85,0,.1);border:1px solid rgba(255,85,0,.2);display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:20px}
+.step-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--white);margin-bottom:10px}
+.step-desc{font-size:13px;line-height:1.7;color:var(--silver)}
+
+/* ===================== WHY / NUMBERS ===================== */
+.why{display:grid;grid-template-columns:1fr 1fr;background:var(--carbon)}
+.why-visual{position:relative;overflow:hidden;min-height:600px}
+.why-visual-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.why-bg-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(100px,18vw,240px);color:rgba(255,85,0,.04);letter-spacing:-.04em;line-height:1;user-select:none;white-space:nowrap}
+.why-badge{position:absolute;bottom:40px;right:40px;background:var(--orange);padding:28px 32px;text-align:center}
+.why-badge-num{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--black);line-height:1}
+.why-badge-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.7)}
+.why-lines{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.why-lines::before{content:'';position:absolute;top:-50%;left:50%;width:1px;height:200%;background:linear-gradient(to bottom,transparent,rgba(255,85,0,.15),transparent);transform:rotate(-12deg)}
+.why-lines::after{content:'';position:absolute;top:-50%;left:30%;width:1px;height:200%;background:linear-gradient(to bottom,transparent,rgba(255,85,0,.08),transparent);transform:rotate(-12deg)}
+.why-content{padding:72px 56px;display:flex;flex-direction:column;justify-content:center}
+.why-features{margin-top:44px;display:flex;flex-direction:column}
+.why-feat{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);transition:padding-left .25s}
+.why-feat:first-child{padding-top:0}
+.why-feat:last-child{border-bottom:none}
+.why-feat:hover{padding-left:8px}
+.wf-icon{width:44px;height:44px;border:1px solid rgba(255,85,0,.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .25s,border-color .25s}
+.why-feat:hover .wf-icon{background:rgba(255,85,0,.1);border-color:var(--orange)}
+.wf-content h3{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:5px}
+.wf-content p{font-size:13px;color:var(--silver);line-height:1.65}
+
+/* ===================== NUMBERS ===================== */
+.numbers{background:var(--black);padding:0}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.number-item{padding:56px 40px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background .3s}
+.number-item:nth-child(4n){border-right:none}
+.number-item:nth-child(n+5){border-bottom:none}
+.number-item:hover{background:rgba(255,85,0,.04)}
+.number-item::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--orange);transition:width .4s}
+.number-item:hover::after{width:100%}
+.num-value{font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:-.01em;color:var(--white);line-height:1;margin-bottom:6px}
+.num-value span{color:var(--orange)}
+.num-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* ===================== TESTIMONIALS ===================== */
+.testimonials{background:var(--carbon);padding:80px 48px}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:56px}
+.testi-card{background:var(--dark);padding:40px;position:relative;overflow:hidden;transition:background .3s}
+.testi-card:hover{background:var(--panel)}
+.testi-card::before{content:'"';font-family:'Bebas Neue',sans-serif;font-size:140px;color:var(--orange);opacity:.08;position:absolute;top:-16px;left:16px;line-height:1;pointer-events:none}
+.stars{display:flex;gap:3px;margin-bottom:18px}
+.star{color:var(--orange);font-size:14px}
+.testi-text{font-size:14px;line-height:1.8;color:var(--silver);margin-bottom:24px;position:relative}
+.testi-author{display:flex;align-items:center;gap:14px}
+.testi-av{width:42px;height:42px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--black);flex-shrink:0}
+.testi-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--white)}
+.testi-loc{font-size:12px;color:var(--muted)}
+
+/* ===================== CTA SECTION ===================== */
+.cta-section{position:relative;overflow:hidden;background:var(--black);padding:100px 48px}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,85,0,.12) 0%,transparent 70%)}
+.cta-bg::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border:1px solid rgba(255,85,0,.06);border-radius:50%}
+.cta-bg::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:900px;border:1px solid rgba(255,85,0,.03);border-radius:50%}
+.cta-inner{position:relative;z-index:2;max-width:800px;margin:0 auto;text-align:center}
+.cta-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,85,0,.1);border:1px solid rgba(255,85,0,.25);padding:6px 16px;margin-bottom:24px}
+.cta-tag span{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)}
+.cta-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,7vw,100px);line-height:.92;letter-spacing:.02em;color:var(--white);margin-bottom:20px}
+.cta-title em{color:var(--orange);font-style:normal}
+.cta-sub{font-size:15px;color:var(--silver);max-width:440px;margin:0 auto 40px;line-height:1.7}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-phone{display:flex;align-items:center;gap:10px;margin-top:32px;justify-content:center;font-size:14px;color:var(--muted)}
+.cta-phone a{color:var(--orange);text-decoration:none;font-weight:500}
+.cta-phone a:hover{text-decoration:underline}
+
+/* ===================== FOOTER ===================== */
+footer{background:var(--carbon);border-top:1px solid var(--border);padding:72px 48px 0}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid var(--border)}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.15em;color:var(--white);text-decoration:none;display:block;margin-bottom:16px}
+.footer-logo span{color:var(--orange)}
+.footer-about{font-size:13px;line-height:1.75;color:var(--silver);max-width:260px;margin-bottom:24px}
+.footer-socials{display:flex;gap:10px}
+.soc-btn{width:38px;height:38px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--silver);text-decoration:none;transition:all .2s}
+.soc-btn:hover{border-color:var(--orange);color:var(--orange);background:rgba(255,85,0,.08)}
+.footer-col-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);margin-bottom:22px}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:11px}
+.footer-col a{font-size:13px;color:var(--silver);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:8px}
+.footer-col a:hover{color:var(--white)}
+.footer-col a::before{content:'';width:0;height:1px;background:var(--orange);transition:width .25s;flex-shrink:0}
+.footer-col a:hover::before{width:12px}
+.footer-bottom{padding:24px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:12px;color:var(--muted)}
+.footer-made{font-size:11px;color:rgba(255,255,255,.15)}
+
+/* WhatsApp FAB */
+.fab{position:fixed;bottom:28px;right:28px;z-index:400;width:52px;height:52px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 8px 24px rgba(37,211,102,.35);transition:transform .2s,box-shadow .2s;animation:fabPulse 3s ease-in-out infinite}
+.fab:hover{transform:scale(1.1);box-shadow:0 12px 32px rgba(37,211,102,.5)}
+@keyframes fabPulse{0%,100%{box-shadow:0 8px 24px rgba(37,211,102,.35)}50%{box-shadow:0 8px 40px rgba(37,211,102,.6)}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.18s}.reveal-d3{transition-delay:.26s}
+
+/* ===================== RESPONSIVE ===================== */
+@media(max-width:1100px){
+  nav{padding:0 28px}
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-left{padding:100px 28px 80px;max-width:100%;justify-content:flex-end;min-height:100svh}
+  .hero-stats-bar{position:static;margin-top:40px}
+  .hero-scroll{display:none}
+  .inventory,.process,.testimonials,.why-content,.numbers,.cta-section,.footer-top,.brands-strip,.search-section{padding-left:28px;padding-right:28px}
+  .why{grid-template-columns:1fr}
+  .why-visual{min-height:320px}
+  .why-visual-inner{position:static;transform:none}
+  .process-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  body{cursor:auto}
+  #cur,#cur-ring{display:none}
+  nav{padding:0 18px;height:64px}
+  .nav-links,.nav-tel,.nav-btn{display:none}
+  .hamburger{display:flex}
+  .hero-left{padding:88px 18px 20px;min-height:100svh}
+  h1.hero-title{font-size:clamp(64px,16vw,100px)}
+  .hero-stats-bar{flex-wrap:wrap}
+  .hero-stat{min-width:50%;border-bottom:1px solid var(--border)}
+  .hero-btns{flex-direction:column}
+  .btn-fill,.btn-outline{text-align:center;justify-content:center}
+  .search-bar{grid-template-columns:1fr 1fr}
+  .search-btn{grid-column:span 2;padding:18px}
+  .cars-grid{grid-template-columns:1fr}
+  .car-card.featured{grid-column:span 1}
+  .car-card.featured .car-vis{height:240px}
+  .process-grid{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .number-item:nth-child(2n){border-right:none}
+  .number-item:nth-child(n+5){border-bottom:1px solid var(--border)}
+  .testi-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .cta-section{padding:72px 18px}
+  .cta-actions{flex-direction:column;align-items:center}
+  .btn-fill,.btn-outline,.btn-ghost2{width:100%;max-width:300px;text-align:center;justify-content:center}
+  footer{padding:56px 18px 0}
+  .inventory,.process,.testimonials,.cta-section,.brands-strip,.search-section{padding-left:18px;padding-right:18px}
+  .section-head{flex-direction:column;align-items:flex-start}
+  .ticker-track{animation-duration:12s}
+  .fab{bottom:18px;right:18px}
+}
+@media(max-width:420px){
+  h1.hero-title{font-size:clamp(52px,15vw,80px)}
+  .hstat-num{font-size:28px}
+  .mob-nav a{font-size:38px}
+  .numbers-grid{grid-template-columns:1fr}
+  .number-item:nth-child(n){border-right:none;border-bottom:1px solid var(--border)}
+}
 </style>
 </head>
 <body>
 
-<!-- Custom cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<div id="cur"></div>
+<div id="cur-ring"></div>
 
-<!-- WhatsApp FAB -->
-<a href="https://wa.me/212600000000" class="whatsapp-fab" title="Contact us on WhatsApp">
-  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<!-- FAB -->
+<a href="https://wa.me/212600000000" class="fab" title="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- Mobile Nav Drawer -->
-<div class="mobile-nav" id="mobileNav">
-  <a href="#inventory" class="mobile-link">Inventory</a>
-  <a href="#brands" class="mobile-link">Brands</a>
-  <a href="#about" class="mobile-link">About</a>
-  <a href="#contact" class="mobile-link">Contact</a>
-  <a href="https://wa.me/212600000000" class="mobile-cta mobile-link">Sell My Car</a>
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mobNav">
+  <a href="#inventory" class="mob-link">Inventory</a>
+  <a href="#process" class="mob-link">How It Works</a>
+  <a href="#about" class="mob-link">About</a>
+  <a href="#contact" class="mob-link">Contact</a>
+  <a href="https://wa.me/212600000000" class="mob-cta-link mob-link">WhatsApp Us</a>
 </div>
 
 <!-- NAV -->
-<nav>
-  <a href="#" class="logo">CAR<span>HUB</span>.MA</a>
+<nav id="mainNav">
+  <a href="#" class="logo">CAR<span class="logo-dot">HUB</span>.MA</a>
   <ul class="nav-links">
     <li><a href="#inventory">Inventory</a></li>
-    <li><a href="#brands">Brands</a></li>
-    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="https://wa.me/212600000000" class="nav-cta">Sell My Car</a>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <a href="tel:+212600000000" class="nav-tel">+212 6 00 00 00 00</a>
+    <a href="https://wa.me/212600000000" class="nav-btn">Sell My Car</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <!-- Car SVG silhouette -->
-  <svg class="hero-car" viewBox="0 0 900 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Sport car silhouette -->
-    <g filter="url(#glow)">
-      <!-- Body -->
-      <path d="M120 280 L120 240 Q140 200 200 185 L300 160 Q380 130 460 128 Q540 126 580 140 L700 170 L780 200 Q820 215 820 240 L820 280 Z" fill="#161616" stroke="rgba(255,106,0,0.3)" stroke-width="1.5"/>
-      <!-- Roof -->
-      <path d="M260 185 Q320 145 420 132 Q500 122 560 135 L640 165 L580 162 Q490 130 400 132 Q315 135 270 180 Z" fill="#222220" stroke="rgba(255,106,0,0.15)" stroke-width="1"/>
-      <!-- Windows -->
-      <path d="M285 183 Q330 150 410 138 L500 135 L540 155 L440 160 Q355 165 300 188 Z" fill="rgba(255,106,0,0.08)" stroke="rgba(255,106,0,0.2)" stroke-width="1"/>
-      <path d="M545 155 L620 168 L600 172 L545 162 Z" fill="rgba(255,106,0,0.08)" stroke="rgba(255,106,0,0.2)" stroke-width="1"/>
-      <!-- Wheels -->
-      <circle cx="250" cy="282" r="52" fill="#080808" stroke="rgba(255,106,0,0.4)" stroke-width="2"/>
-      <circle cx="250" cy="282" r="36" fill="#0f0f0f" stroke="rgba(255,106,0,0.2)" stroke-width="1"/>
-      <circle cx="250" cy="282" r="14" fill="rgba(255,106,0,0.3)"/>
-      <circle cx="670" cy="282" r="52" fill="#080808" stroke="rgba(255,106,0,0.4)" stroke-width="2"/>
-      <circle cx="670" cy="282" r="36" fill="#0f0f0f" stroke="rgba(255,106,0,0.2)" stroke-width="1"/>
-      <circle cx="670" cy="282" r="14" fill="rgba(255,106,0,0.3)"/>
-      <!-- Headlight -->
-      <path d="M780 215 L820 225 L820 242 L790 240 Z" fill="rgba(255,106,0,0.6)" filter="url(#headlight)"/>
-      <!-- Grille -->
-      <path d="M800 245 L820 248 L820 265 L800 262 Z" fill="rgba(255,106,0,0.15)" stroke="rgba(255,106,0,0.3)" stroke-width="1"/>
-      <!-- Ground reflection -->
-      <ellipse cx="460" cy="338" rx="320" ry="12" fill="rgba(255,106,0,0.08)"/>
-    </g>
-    <defs>
-      <filter id="glow" x="-10%" y="-20%" width="120%" height="140%">
-        <feGaussianBlur stdDeviation="4" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="headlight" x="-200%" y="-200%" width="500%" height="500%">
-        <feGaussianBlur stdDeviation="8" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-  </svg>
-
-  <div class="hero-content">
-    <div class="hero-eyebrow">Casablanca, Maroc</div>
-    <h1 class="hero-title">DRIVE<br><em>YOUR</em><br>DREAM</h1>
-    <p class="hero-subtitle">Discover Morocco's finest selection of premium and luxury vehicles. Certified, inspected, and delivered to your door.</p>
-    <div class="hero-actions">
-      <a href="#inventory" class="btn-primary">Browse Inventory</a>
-      <a href="#contact" class="btn-ghost">Book Test Drive</a>
+<section class="hero" id="home">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-left">
+    <div class="hero-tag reveal">
+      <span class="hero-tag-dot"></span>
+      <span>Casablanca · Maroc · Est. 2015</span>
     </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">200+</div>
-        <div class="stat-label">Cars Available</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">98%</div>
-        <div class="stat-label">Satisfied Clients</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">5★</div>
-        <div class="stat-label">Google Rating</div>
-      </div>
+    <h1 class="hero-title reveal">
+      DRIVE<br>
+      <span class="stroke">YOUR</span><br>
+      <span class="orange">DREAM.</span>
+    </h1>
+    <p class="hero-desc reveal">Morocco's most trusted source for premium and luxury vehicles. Every car inspected, certified, and ready to own.</p>
+    <div class="hero-btns reveal">
+      <a href="#inventory" class="btn-fill">
+        Browse Cars
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://wa.me/212600000000" class="btn-outline">WhatsApp Us</a>
     </div>
+    <div class="hero-stats reveal" style="display:flex;gap:32px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+      <div><div class="hstat-num" data-target="200">0</div><div class="hstat-label">Cars In Stock</div></div>
+      <div><div class="hstat-num" data-target="1400">0</div><div class="hstat-label">Happy Clients</div></div>
+      <div><div class="hstat-num" data-target="10">0</div><div class="hstat-label">Years Active</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-car-wrap">
+      <svg class="hero-car-svg" viewBox="0 0 860 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow2"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="headlightGlow"><feGaussianBlur stdDeviation="10" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#282828"/><stop offset="100%" stop-color="#141414"/></linearGradient>
+          <linearGradient id="windowGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgba(255,85,0,0.15)"/><stop offset="100%" stop-color="rgba(0,0,0,0.3)"/></linearGradient>
+        </defs>
+        <g filter="url(#glow2)">
+          <!-- Ground shadow -->
+          <ellipse cx="440" cy="340" rx="340" ry="16" fill="rgba(255,85,0,0.08)"/>
+          <!-- Main body -->
+          <path d="M80 270 L80 228 Q96 190 164 174 L272 150 Q370 122 452 120 Q534 118 578 134 L712 166 L800 198 Q840 214 840 238 L840 270 Z" fill="url(#bodyGrad)" stroke="rgba(255,85,0,0.28)" stroke-width="1.5"/>
+          <!-- Side skirt -->
+          <path d="M80 270 L80 278 Q100 285 160 285 L720 285 Q790 285 840 278 L840 270 Z" fill="#0f0f0f" stroke="rgba(255,85,0,0.15)" stroke-width="1"/>
+          <!-- Roof -->
+          <path d="M240 174 Q300 136 410 122 Q490 112 555 126 L650 155 L600 152 Q500 126 405 124 Q310 126 262 172 Z" fill="#1e1e1e" stroke="rgba(255,85,0,0.18)" stroke-width="1"/>
+          <!-- Front window -->
+          <path d="M262 172 Q308 142 395 130 L500 126 L545 148 L440 152 Q348 156 288 175 Z" fill="url(#windowGrad)" stroke="rgba(255,85,0,0.3)" stroke-width="1"/>
+          <!-- Rear window -->
+          <path d="M548 148 L636 164 L614 168 L546 156 Z" fill="url(#windowGrad)" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+          <!-- Door lines -->
+          <line x1="350" y1="172" x2="350" y2="270" stroke="rgba(255,85,0,0.08)" stroke-width="1"/>
+          <line x1="510" y1="162" x2="510" y2="270" stroke="rgba(255,85,0,0.08)" stroke-width="1"/>
+          <!-- Front wheel arch -->
+          <path d="M142 274 Q158 258 186 252 Q214 246 240 252 Q268 258 280 274" fill="none" stroke="rgba(255,85,0,0.2)" stroke-width="1.5"/>
+          <!-- Rear wheel arch -->
+          <path d="M554 274 Q570 258 598 252 Q626 246 652 252 Q680 258 692 274" fill="none" stroke="rgba(255,85,0,0.2)" stroke-width="1.5"/>
+          <!-- Front wheel -->
+          <circle cx="212" cy="280" r="52" fill="#080808" stroke="rgba(255,85,0,0.5)" stroke-width="2"/>
+          <circle cx="212" cy="280" r="36" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+          <circle cx="212" cy="280" r="16" fill="rgba(255,85,0,0.2)"/>
+          <line x1="212" y1="244" x2="212" y2="316" stroke="rgba(255,85,0,0.15)" stroke-width="1.5"/>
+          <line x1="176" y1="280" x2="248" y2="280" stroke="rgba(255,85,0,0.15)" stroke-width="1.5"/>
+          <line x1="186" y1="254" x2="238" y2="306" stroke="rgba(255,85,0,0.1)" stroke-width="1.5"/>
+          <line x1="238" y1="254" x2="186" y2="306" stroke="rgba(255,85,0,0.1)" stroke-width="1.5"/>
+          <!-- Rear wheel -->
+          <circle cx="622" cy="280" r="52" fill="#080808" stroke="rgba(255,85,0,0.5)" stroke-width="2"/>
+          <circle cx="622" cy="280" r="36" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+          <circle cx="622" cy="280" r="16" fill="rgba(255,85,0,0.2)"/>
+          <line x1="622" y1="244" x2="622" y2="316" stroke="rgba(255,85,0,0.15)" stroke-width="1.5"/>
+          <line x1="586" y1="280" x2="658" y2="280" stroke="rgba(255,85,0,0.15)" stroke-width="1.5"/>
+          <line x1="596" y1="254" x2="648" y2="306" stroke="rgba(255,85,0,0.1)" stroke-width="1.5"/>
+          <line x1="648" y1="254" x2="596" y2="306" stroke="rgba(255,85,0,0.1)" stroke-width="1.5"/>
+          <!-- Headlight group -->
+          <path d="M796 208 L836 220 L838 242 L800 238 Z" fill="rgba(255,85,0,0.7)" filter="url(#headlightGlow)"/>
+          <path d="M802 210 L832 220 L833 238 L804 235 Z" fill="rgba(255,120,40,0.9)"/>
+          <!-- Grille -->
+          <rect x="804" y="245" width="30" height="14" rx="1" fill="none" stroke="rgba(255,85,0,0.4)" stroke-width="1"/>
+          <line x1="814" y1="245" x2="814" y2="259" stroke="rgba(255,85,0,0.25)" stroke-width="1"/>
+          <line x1="824" y1="245" x2="824" y2="259" stroke="rgba(255,85,0,0.25)" stroke-width="1"/>
+          <!-- Tail light -->
+          <path d="M84 232 L80 240 L80 258 L86 254 Z" fill="rgba(255,85,0,0.4)" filter="url(#headlightGlow)"/>
+          <!-- Orange stripe accent -->
+          <path d="M160 172 L680 168" stroke="rgba(255,85,0,0.12)" stroke-width="1" stroke-dasharray="4 8"/>
+          <!-- Floor reflection -->
+          <path d="M80 290 L840 290 Q840 310 700 316 L220 316 Q80 310 80 290 Z" fill="rgba(255,85,0,0.03)"/>
+        </g>
+      </svg>
+      <div class="hero-glow"></div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-section">
-  <div class="marquee-track">
-    <span>BMW</span><span class="dot">◆</span>
-    <span>MERCEDES-BENZ</span><span class="dot">◆</span>
-    <span>AUDI</span><span class="dot">◆</span>
-    <span>PORSCHE</span><span class="dot">◆</span>
-    <span>RANGE ROVER</span><span class="dot">◆</span>
-    <span>TESLA</span><span class="dot">◆</span>
-    <span>VOLKSWAGEN</span><span class="dot">◆</span>
-    <span>TOYOTA</span><span class="dot">◆</span>
-    <span>BMW</span><span class="dot">◆</span>
-    <span>MERCEDES-BENZ</span><span class="dot">◆</span>
-    <span>AUDI</span><span class="dot">◆</span>
-    <span>PORSCHE</span><span class="dot">◆</span>
-    <span>RANGE ROVER</span><span class="dot">◆</span>
-    <span>TESLA</span><span class="dot">◆</span>
-    <span>VOLKSWAGEN</span><span class="dot">◆</span>
-    <span>TOYOTA</span><span class="dot">◆</span>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-item">BMW</div>
+    <div class="ticker-item">Mercedes-Benz</div>
+    <div class="ticker-item">Audi</div>
+    <div class="ticker-item">Porsche</div>
+    <div class="ticker-item">Range Rover</div>
+    <div class="ticker-item">Tesla</div>
+    <div class="ticker-item">Volkswagen</div>
+    <div class="ticker-item">Toyota</div>
+    <div class="ticker-item">Lexus</div>
+    <div class="ticker-item">Volvo</div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-wrap">
+    <div class="search-label">Find Your Car</div>
+    <div class="search-bar">
+      <div class="search-field">
+        <label>Brand</label>
+        <select><option>All Brands</option><option>BMW</option><option>Mercedes</option><option>Audi</option><option>Porsche</option><option>Range Rover</option><option>Tesla</option></select>
+      </div>
+      <div class="search-field">
+        <label>Type</label>
+        <select><option>All Types</option><option>SUV / 4x4</option><option>Sedan</option><option>Coupé / Sport</option><option>Electric</option><option>Convertible</option></select>
+      </div>
+      <div class="search-field">
+        <label>Budget (MAD)</label>
+        <select><option>Any Budget</option><option>Under 300,000</option><option>300K – 600K</option><option>600K – 1M</option><option>Over 1M</option></select>
+      </div>
+      <button class="search-btn">Search →</button>
+    </div>
   </div>
 </div>
 
 <!-- INVENTORY -->
-<section class="cars-section" id="inventory">
-  <div class="cars-header reveal">
+<section class="inventory reveal" id="inventory">
+  <div class="section-head">
     <div>
-      <div class="section-eyebrow">Featured Listings</div>
-      <h2 class="section-title">LATEST<br>ARRIVALS</h2>
+      <div class="eyebrow">Featured Listings</div>
+      <h2 class="sec-title">LATEST<br>ARRIVALS</h2>
     </div>
-    <div>
-      <div class="filter-tabs">
-        <button class="filter-tab active">All</button>
-        <button class="filter-tab">SUV</button>
-        <button class="filter-tab">Sedan</button>
-        <button class="filter-tab">Sport</button>
-      </div>
+    <div class="filter-row">
+      <button class="ftab active">All</button>
+      <button class="ftab">SUV</button>
+      <button class="ftab">Sedan</button>
+      <button class="ftab">Sport</button>
+      <button class="ftab">Electric</button>
     </div>
   </div>
-
   <div class="cars-grid">
-    <!-- Card 1 - large -->
-    <div class="car-card bg1 reveal">
-      <div class="car-img-placeholder">
-        <svg viewBox="0 0 600 300" width="90%" opacity="0.7">
-          <g fill="none">
-            <path d="M60 200 Q80 160 140 145 L240 118 Q320 95 380 93 Q440 91 470 103 L560 128 L600 148 L600 200 Z" fill="#2a2a22" stroke="rgba(255,106,0,0.25)" stroke-width="1.5"/>
-            <path d="M160 145 Q200 112 280 99 L360 93 L400 107 L310 110 Q230 113 180 143 Z" fill="rgba(255,106,0,0.06)" stroke="rgba(255,106,0,0.18)" stroke-width="1"/>
-            <circle cx="160" cy="202" r="40" fill="#111" stroke="rgba(255,106,0,0.35)" stroke-width="2"/>
-            <circle cx="160" cy="202" r="26" fill="#080808" stroke="rgba(255,106,0,0.18)"/>
-            <circle cx="160" cy="202" r="10" fill="rgba(255,106,0,0.25)"/>
-            <circle cx="500" cy="202" r="40" fill="#111" stroke="rgba(255,106,0,0.35)" stroke-width="2"/>
-            <circle cx="500" cy="202" r="26" fill="#080808" stroke="rgba(255,106,0,0.18)"/>
-            <circle cx="500" cy="202" r="10" fill="rgba(255,106,0,0.25)"/>
-            <path d="M576 155 L600 161 L600 177 L582 175 Z" fill="rgba(255,106,0,0.7)"/>
-          </g>
-        </svg>
+
+    <!-- Card 1 - featured -->
+    <div class="car-card featured reveal">
+      <div class="car-vis">
+        <div class="car-vis-bg" style="background:linear-gradient(135deg,#0d0d0d,#1a0d05)">
+          <svg viewBox="0 0 560 280" width="88%" opacity=".85">
+            <defs><filter id="g1"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+            <g filter="url(#g1)">
+              <ellipse cx="280" cy="252" rx="240" ry="12" fill="rgba(255,85,0,0.07)"/>
+              <path d="M40 200 L40 168 Q55 138 105 126 L190 108 Q254 88 310 86 Q366 84 394 96 L494 122 L544 144 L544 200 Z" fill="#1a1a1a" stroke="rgba(255,85,0,0.35)" stroke-width="1.5"/>
+              <path d="M158 126 Q194 100 262 90 L334 86 L368 98 L302 101 Q232 104 178 124 Z" fill="rgba(255,85,0,0.08)" stroke="rgba(255,85,0,0.3)" stroke-width="1"/>
+              <circle cx="130" cy="202" r="38" fill="#080808" stroke="rgba(255,85,0,0.5)" stroke-width="2"/>
+              <circle cx="130" cy="202" r="26" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+              <circle cx="130" cy="202" r="10" fill="rgba(255,85,0,0.25)"/>
+              <circle cx="432" cy="202" r="38" fill="#080808" stroke="rgba(255,85,0,0.5)" stroke-width="2"/>
+              <circle cx="432" cy="202" r="26" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+              <circle cx="432" cy="202" r="10" fill="rgba(255,85,0,0.25)"/>
+              <path d="M528 150 L544 157 L544 174 L532 172 Z" fill="rgba(255,85,0,0.8)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="car-vis-gradient"></div>
+        <div class="car-vis-top">
+          <span class="car-badge2">New Arrival</span>
+          <span class="car-km">8,200 km</span>
+        </div>
       </div>
-      <div class="car-card-overlay"></div>
-      <div class="car-card-body">
-        <span class="car-badge">New Arrival</span>
-        <div class="car-name">BMW M5 COMPETITION</div>
-        <div class="car-details">
-          <span class="car-year">2024 · 8,200 km</span>
-          <span class="car-price">1,250,000 MAD</span>
+      <div class="car-body">
+        <div class="car-brand">BMW</div>
+        <div class="car-name2">M5 Competition</div>
+        <div class="car-specs">
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>2024</span>
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>625 CV</span>
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Certifié</span>
+        </div>
+        <div class="car-footer2">
+          <span class="car-price2">1 250 000 MAD</span>
+          <a href="#contact" class="car-cta">Voir →</a>
         </div>
       </div>
     </div>
+
     <!-- Card 2 -->
-    <div class="car-card bg2 reveal reveal-delay-1">
-      <div class="car-img-placeholder">
-        <svg viewBox="0 0 400 240" width="85%" opacity="0.6">
-          <path d="M40 165 Q55 135 100 122 L175 105 Q230 88 270 88 Q310 88 330 98 L380 115 L400 128 L400 165 Z" fill="#161620" stroke="rgba(255,106,0,0.2)" stroke-width="1.5"/>
-          <circle cx="110" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="110" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-          <circle cx="110" cy="167" r="7" fill="rgba(255,106,0,0.2)"/>
-          <circle cx="330" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="330" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-          <circle cx="330" cy="167" r="7" fill="rgba(255,106,0,0.2)"/>
-        </svg>
+    <div class="car-card reveal reveal-d1">
+      <div class="car-vis">
+        <div class="car-vis-bg" style="background:linear-gradient(135deg,#0c0c14,#14141e)">
+          <svg viewBox="0 0 400 240" width="90%" opacity=".8">
+            <ellipse cx="200" cy="210" rx="180" ry="10" fill="rgba(255,85,0,0.06)"/>
+            <path d="M28 168 L28 140 Q42 112 88 102 L162 88 Q216 74 254 74 Q292 74 312 84 L380 104 L398 116 L398 168 Z" fill="#181818" stroke="rgba(255,85,0,0.3)" stroke-width="1.5"/>
+            <path d="M105 102 Q136 82 192 75 L248 72 L274 82 L218 85 Q160 89 120 100 Z" fill="rgba(255,85,0,0.07)" stroke="rgba(255,85,0,0.25)" stroke-width="1"/>
+            <circle cx="96" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.45)" stroke-width="1.5"/>
+            <circle cx="96" cy="170" r="20" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+            <circle cx="96" cy="170" r="8" fill="rgba(255,85,0,0.22)"/>
+            <circle cx="324" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.45)" stroke-width="1.5"/>
+            <circle cx="324" cy="170" r="20" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+            <circle cx="324" cy="170" r="8" fill="rgba(255,85,0,0.22)"/>
+            <path d="M387 120 L398 125 L398 138 L390 136 Z" fill="rgba(255,85,0,0.75)"/>
+          </svg>
+        </div>
+        <div class="car-vis-gradient"></div>
+        <div class="car-vis-top">
+          <span class="car-badge2">Premium</span>
+          <span class="car-km">15,400 km</span>
+        </div>
       </div>
-      <div class="car-card-overlay"></div>
-      <div class="car-card-body">
-        <span class="car-badge">Premium</span>
-        <div class="car-name">MERCEDES GLE AMG</div>
-        <div class="car-details">
-          <span class="car-year">2023 · 15,400 km</span>
-          <span class="car-price">980,000 MAD</span>
+      <div class="car-body">
+        <div class="car-brand">Mercedes-Benz</div>
+        <div class="car-name2">GLE 63 AMG</div>
+        <div class="car-specs">
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>2023</span>
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>612 CV</span>
+        </div>
+        <div class="car-footer2">
+          <span class="car-price2">980 000 MAD</span>
+          <a href="#contact" class="car-cta">Voir →</a>
         </div>
       </div>
     </div>
+
     <!-- Card 3 -->
-    <div class="car-card bg3 reveal reveal-delay-1">
-      <div class="car-img-placeholder">
-        <svg viewBox="0 0 400 240" width="85%" opacity="0.6">
-          <path d="M30 165 Q50 130 100 118 L185 100 Q245 84 285 84 Q325 84 348 95 L390 112 L400 125 L400 165 Z" fill="#1a1510" stroke="rgba(255,106,0,0.2)" stroke-width="1.5"/>
-          <path d="M105 118 Q140 92 200 84 L270 81 L300 92 L240 95 Q175 99 120 116 Z" fill="rgba(255,106,0,0.05)" stroke="rgba(255,106,0,0.15)" stroke-width="1"/>
-          <circle cx="108" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="108" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-          <circle cx="340" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="340" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-        </svg>
+    <div class="car-card reveal">
+      <div class="car-vis">
+        <div class="car-vis-bg" style="background:linear-gradient(135deg,#110a05,#1a1208)">
+          <svg viewBox="0 0 400 240" width="90%" opacity=".8">
+            <ellipse cx="200" cy="210" rx="178" ry="10" fill="rgba(255,85,0,0.06)"/>
+            <path d="M25 168 L25 138 Q40 108 90 98 L168 84 Q222 68 262 68 Q302 68 324 80 L382 102 L398 115 L398 168 Z" fill="#1a1208" stroke="rgba(255,85,0,0.3)" stroke-width="1.5"/>
+            <path d="M108 98 Q140 76 198 68 L256 65 L282 76 L224 79 Q165 83 124 97 Z" fill="rgba(255,85,0,0.07)" stroke="rgba(255,85,0,0.22)" stroke-width="1"/>
+            <circle cx="94" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.45)" stroke-width="1.5"/>
+            <circle cx="94" cy="170" r="20" fill="#0d0d0d"/>
+            <circle cx="94" cy="170" r="8" fill="rgba(255,85,0,0.22)"/>
+            <circle cx="322" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.45)" stroke-width="1.5"/>
+            <circle cx="322" cy="170" r="20" fill="#0d0d0d"/>
+            <circle cx="322" cy="170" r="8" fill="rgba(255,85,0,0.22)"/>
+            <path d="M386 118 L398 124 L398 137 L388 135 Z" fill="rgba(255,85,0,0.75)"/>
+          </svg>
+        </div>
+        <div class="car-vis-gradient"></div>
+        <div class="car-vis-top">
+          <span class="car-badge2">Sport</span>
+          <span class="car-km">22,000 km</span>
+        </div>
       </div>
-      <div class="car-card-overlay"></div>
-      <div class="car-card-body">
-        <span class="car-badge">Sport</span>
-        <div class="car-name">PORSCHE CAYENNE S</div>
-        <div class="car-details">
-          <span class="car-year">2023 · 22,000 km</span>
-          <span class="car-price">1,100,000 MAD</span>
+      <div class="car-body">
+        <div class="car-brand">Porsche</div>
+        <div class="car-name2">Cayenne S</div>
+        <div class="car-specs">
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>2023</span>
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>440 CV</span>
+        </div>
+        <div class="car-footer2">
+          <span class="car-price2">1 100 000 MAD</span>
+          <a href="#contact" class="car-cta">Voir →</a>
         </div>
       </div>
     </div>
+
     <!-- Card 4 -->
-    <div class="car-card bg4 reveal reveal-delay-2">
-      <div class="car-img-placeholder">
-        <svg viewBox="0 0 400 240" width="85%" opacity="0.6">
-          <path d="M35 165 Q55 132 110 120 L195 102 Q255 86 295 86 Q335 86 355 97 L392 114 L400 127 L400 165 Z" fill="#10141a" stroke="rgba(255,106,0,0.2)" stroke-width="1.5"/>
-          <circle cx="112" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="112" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-          <circle cx="338" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="338" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-        </svg>
+    <div class="car-card reveal reveal-d1">
+      <div class="car-vis">
+        <div class="car-vis-bg" style="background:linear-gradient(135deg,#080c14,#0e1420)">
+          <svg viewBox="0 0 400 240" width="90%" opacity=".8">
+            <ellipse cx="200" cy="210" rx="178" ry="10" fill="rgba(255,85,0,0.06)"/>
+            <path d="M22 168 L22 135 Q38 105 92 95 L172 80 Q228 64 268 64 Q308 64 330 76 L386 100 L398 113 L398 168 Z" fill="#0e1420" stroke="rgba(255,85,0,0.28)" stroke-width="1.5"/>
+            <circle cx="92" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.42)" stroke-width="1.5"/>
+            <circle cx="92" cy="170" r="20" fill="#0d0d0d"/><circle cx="92" cy="170" r="8" fill="rgba(255,85,0,0.2)"/>
+            <circle cx="322" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.42)" stroke-width="1.5"/>
+            <circle cx="322" cy="170" r="20" fill="#0d0d0d"/><circle cx="322" cy="170" r="8" fill="rgba(255,85,0,0.2)"/>
+            <path d="M386 116 L398 122 L398 135 L388 133 Z" fill="rgba(255,85,0,0.7)"/>
+          </svg>
+        </div>
+        <div class="car-vis-gradient"></div>
+        <div class="car-vis-top">
+          <span class="car-badge2">Electric</span>
+          <span class="car-km">5,100 km</span>
+        </div>
       </div>
-      <div class="car-card-overlay"></div>
-      <div class="car-card-body">
-        <span class="car-badge">Electric</span>
-        <div class="car-name">TESLA MODEL 3</div>
-        <div class="car-details">
-          <span class="car-year">2024 · 5,100 km</span>
-          <span class="car-price">490,000 MAD</span>
+      <div class="car-body">
+        <div class="car-brand">Tesla</div>
+        <div class="car-name2">Model 3 LR</div>
+        <div class="car-specs">
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>2024</span>
+          <span class="car-spec">⚡ 358 CV</span>
+        </div>
+        <div class="car-footer2">
+          <span class="car-price2">490 000 MAD</span>
+          <a href="#contact" class="car-cta">Voir →</a>
         </div>
       </div>
     </div>
+
     <!-- Card 5 -->
-    <div class="car-card bg1 reveal reveal-delay-2">
-      <div class="car-img-placeholder">
-        <svg viewBox="0 0 400 240" width="85%" opacity="0.6">
-          <path d="M40 165 Q62 130 115 118 L200 100 Q260 84 298 84 Q338 84 360 96 L394 113 L400 126 L400 165 Z" fill="#161613" stroke="rgba(255,106,0,0.2)" stroke-width="1.5"/>
-          <circle cx="116" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="116" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-          <circle cx="335" cy="167" r="32" fill="#080808" stroke="rgba(255,106,0,0.3)" stroke-width="2"/>
-          <circle cx="335" cy="167" r="18" fill="#111" stroke="rgba(255,106,0,0.15)"/>
-        </svg>
+    <div class="car-card reveal reveal-d2">
+      <div class="car-vis">
+        <div class="car-vis-bg" style="background:linear-gradient(135deg,#0f0f10,#181614)">
+          <svg viewBox="0 0 400 240" width="90%" opacity=".8">
+            <ellipse cx="200" cy="210" rx="178" ry="10" fill="rgba(255,85,0,0.06)"/>
+            <path d="M24 168 L24 136 Q40 106 94 96 L174 82 L268 66 Q308 64 330 76 L386 100 L398 113 L398 168 Z" fill="#181614" stroke="rgba(255,85,0,0.28)" stroke-width="1.5"/>
+            <path d="M115 96 Q147 76 206 67 L264 63 L290 74 L232 77 Q172 81 132 95 Z" fill="rgba(255,85,0,0.07)" stroke="rgba(255,85,0,0.22)" stroke-width="1"/>
+            <circle cx="94" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.42)" stroke-width="1.5"/>
+            <circle cx="94" cy="170" r="20" fill="#0d0d0d"/><circle cx="94" cy="170" r="8" fill="rgba(255,85,0,0.2)"/>
+            <circle cx="322" cy="170" r="30" fill="#080808" stroke="rgba(255,85,0,0.42)" stroke-width="1.5"/>
+            <circle cx="322" cy="170" r="20" fill="#0d0d0d"/><circle cx="322" cy="170" r="8" fill="rgba(255,85,0,0.2)"/>
+            <path d="M386 116 L398 122 L398 135 L388 133 Z" fill="rgba(255,85,0,0.7)"/>
+          </svg>
+        </div>
+        <div class="car-vis-gradient"></div>
+        <div class="car-vis-top">
+          <span class="car-badge2">Luxury</span>
+          <span class="car-km">38,500 km</span>
+        </div>
       </div>
-      <div class="car-card-overlay"></div>
-      <div class="car-card-body">
-        <span class="car-badge">Luxury</span>
-        <div class="car-name">RANGE ROVER SPORT</div>
-        <div class="car-details">
-          <span class="car-year">2022 · 38,500 km</span>
-          <span class="car-price">860,000 MAD</span>
+      <div class="car-body">
+        <div class="car-brand">Range Rover</div>
+        <div class="car-name2">Sport HSE</div>
+        <div class="car-specs">
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>2022</span>
+          <span class="car-spec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>395 CV</span>
+        </div>
+        <div class="car-footer2">
+          <span class="car-price2">860 000 MAD</span>
+          <a href="#contact" class="car-cta">Voir →</a>
         </div>
       </div>
     </div>
+
   </div>
+  <div class="view-all-wrap"><a href="#contact" class="btn-ghost2">View All Listings →</a></div>
 </section>
 
 <!-- BRANDS -->
-<div class="brands-section reveal">
-  <div class="brands-label">Brands we specialize in</div>
-  <div class="brands-row">
-    <span class="brand-logo">BMW</span>
-    <span class="brand-logo">MERCEDES</span>
-    <span class="brand-logo">AUDI</span>
-    <span class="brand-logo">PORSCHE</span>
-    <span class="brand-logo">TESLA</span>
-    <span class="brand-logo">LAND ROVER</span>
-    <span class="brand-logo">TOYOTA</span>
-    <span class="brand-logo">VOLKSWAGEN</span>
+<div class="brands-strip reveal">
+  <div class="brands-inner">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-right:16px">Specializing in</span>
+    <a href="#" class="brand-pill">BMW</a>
+    <a href="#" class="brand-pill">Mercedes</a>
+    <a href="#" class="brand-pill">Audi</a>
+    <a href="#" class="brand-pill">Porsche</a>
+    <a href="#" class="brand-pill">Tesla</a>
+    <a href="#" class="brand-pill">Land Rover</a>
+    <a href="#" class="brand-pill">Toyota</a>
+    <a href="#" class="brand-pill">Lexus</a>
+    <a href="#" class="brand-pill">Volvo</a>
   </div>
 </div>
 
-<!-- WHY US -->
-<section id="about" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;background:var(--black);padding:120px 48px;">
-  <div class="why-visual reveal">
-    <div style="position:relative;height:520px;">
-      <div style="position:absolute;inset:0;background:var(--dark);overflow:hidden;">
-        <!-- Interior scene placeholder -->
-        <svg viewBox="0 0 560 520" width="100%" height="100%">
-          <rect width="560" height="520" fill="#0f0f0f"/>
-          <!-- Showroom interior lines -->
-          <line x1="0" y1="380" x2="560" y2="380" stroke="rgba(255,106,0,0.1)" stroke-width="1"/>
-          <line x1="0" y1="260" x2="560" y2="260" stroke="rgba(255,106,0,0.05)" stroke-width="1"/>
-          <!-- perspective lines -->
-          <line x1="280" y1="130" x2="0" y2="520" stroke="rgba(255,106,0,0.06)" stroke-width="1"/>
-          <line x1="280" y1="130" x2="560" y2="520" stroke="rgba(255,106,0,0.06)" stroke-width="1"/>
-          <line x1="280" y1="130" x2="140" y2="520" stroke="rgba(255,106,0,0.04)" stroke-width="1"/>
-          <line x1="280" y1="130" x2="420" y2="520" stroke="rgba(255,106,0,0.04)" stroke-width="1"/>
-          <!-- Ceiling lights -->
-          <ellipse cx="140" cy="60" rx="60" ry="15" fill="rgba(255,106,0,0.12)"/>
-          <ellipse cx="420" cy="60" rx="60" ry="15" fill="rgba(255,106,0,0.12)"/>
-          <line x1="140" y1="60" x2="140" y2="0" stroke="rgba(255,106,0,0.2)" stroke-width="2"/>
-          <line x1="420" y1="60" x2="420" y2="0" stroke="rgba(255,106,0,0.2)" stroke-width="2"/>
-          <!-- Car in showroom -->
-          <path d="M80 310 Q100 270 155 255 L235 237 Q295 220 340 220 Q385 220 410 232 L480 255 L500 268 L500 310 Z" fill="#161616" stroke="rgba(255,106,0,0.3)" stroke-width="1.5"/>
-          <path d="M170 255 Q205 232 265 223 L330 218 L360 228 L295 231 Q230 235 185 253 Z" fill="rgba(255,106,0,0.07)" stroke="rgba(255,106,0,0.2)" stroke-width="1"/>
-          <circle cx="170" cy="312" r="34" fill="#080808" stroke="rgba(255,106,0,0.35)" stroke-width="1.5"/>
-          <circle cx="170" cy="312" r="22" fill="#111" stroke="rgba(255,106,0,0.18)"/>
-          <circle cx="170" cy="312" r="8" fill="rgba(255,106,0,0.25)"/>
-          <circle cx="448" cy="312" r="34" fill="#080808" stroke="rgba(255,106,0,0.35)" stroke-width="1.5"/>
-          <circle cx="448" cy="312" r="22" fill="#111" stroke="rgba(255,106,0,0.18)"/>
-          <circle cx="448" cy="312" r="8" fill="rgba(255,106,0,0.25)"/>
-          <!-- reflection -->
-          <ellipse cx="300" cy="350" rx="180" ry="8" fill="rgba(255,106,0,0.06)"/>
-          <!-- CAR HUB watermark -->
-          <text x="280" y="480" font-family="'Bebas Neue', sans-serif" font-size="18" fill="rgba(255,106,0,0.12)" text-anchor="middle" letter-spacing="12">CAR HUB MA</text>
-        </svg>
-      </div>
-      <div style="position:absolute;bottom:-24px;right:-24px;width:180px;height:180px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-direction:column;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--black);line-height:1;">10+</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--black);text-align:center;padding:0 16px;">Years Serving Morocco</div>
-      </div>
+<!-- PROCESS -->
+<section class="process reveal" id="process">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">How It Works</div>
+      <h2 class="sec-title">YOUR CAR<br>IN 4 STEPS</h2>
     </div>
   </div>
-  <div class="reveal reveal-delay-1">
-    <div class="section-eyebrow">Why Choose Us</div>
-    <h2 class="section-title">THE<br>HUB<br>ADVANTAGE</h2>
-    <div class="features-list">
-      <div class="feature">
-        <div class="feature-icon">🔍</div>
-        <div class="feature-text">
-          <h3>Rigorous Inspection</h3>
-          <p>Every vehicle undergoes a 150-point mechanical and aesthetic inspection before listing. Zero surprises after purchase.</p>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title">Browse & Select</div>
+      <div class="step-desc">Explore our live inventory online or visit our showroom in Casablanca. Filter by brand, type, or budget.</div>
+    </div>
+    <div class="process-step reveal reveal-d1">
+      <div class="step-num">02</div>
+      <div class="step-icon">📋</div>
+      <div class="step-title">Full Inspection</div>
+      <div class="step-desc">Every vehicle comes with a 150-point inspection report, full service history, and legal documentation.</div>
+    </div>
+    <div class="process-step reveal reveal-d2">
+      <div class="step-num">03</div>
+      <div class="step-icon">🤝</div>
+      <div class="step-title">Test Drive</div>
+      <div class="step-desc">Schedule a test drive at our location or request a home delivery test anywhere in Casablanca.</div>
+    </div>
+    <div class="process-step reveal reveal-d3">
+      <div class="step-num">04</div>
+      <div class="step-icon">🚗</div>
+      <div class="step-title">Drive Away</div>
+      <div class="step-desc">Financing, insurance, and paperwork handled by our team. Your car ready in 48 hours or less.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="about">
+  <div class="why-visual reveal">
+    <div class="why-lines"></div>
+    <div class="why-visual-inner">
+      <div class="why-bg-text">HUB</div>
+    </div>
+    <!-- Centered car graphic -->
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;padding:40px">
+      <svg viewBox="0 0 560 320" width="100%" style="filter:drop-shadow(0 20px 40px rgba(255,85,0,0.2));opacity:.9">
+        <defs><filter id="g3"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g filter="url(#g3)">
+          <ellipse cx="280" cy="292" rx="240" ry="14" fill="rgba(255,85,0,0.08)"/>
+          <path d="M52 238 L52 204 Q66 170 120 156 L210 136 Q284 114 334 112 Q384 110 412 124 L512 152 L552 170 L552 238 Z" fill="#181818" stroke="rgba(255,85,0,0.32)" stroke-width="1.5"/>
+          <path d="M210 156 Q254 126 324 116 L404 112 L434 126 L368 130 Q294 135 238 154 Z" fill="rgba(255,85,0,0.08)" stroke="rgba(255,85,0,0.28)" stroke-width="1"/>
+          <circle cx="140" cy="242" r="40" fill="#080808" stroke="rgba(255,85,0,0.5)" stroke-width="2"/>
+          <circle cx="140" cy="242" r="27" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+          <circle cx="140" cy="242" r="11" fill="rgba(255,85,0,0.24)"/>
+          <circle cx="448" cy="242" r="40" fill="#080808" stroke="rgba(255,85,0,0.5)" stroke-width="2"/>
+          <circle cx="448" cy="242" r="27" fill="#0d0d0d" stroke="rgba(255,85,0,0.2)" stroke-width="1"/>
+          <circle cx="448" cy="242" r="11" fill="rgba(255,85,0,0.24)"/>
+          <path d="M540 175 L554 182 L554 200 L543 198 Z" fill="rgba(255,85,0,0.8)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="why-badge">
+      <div class="why-badge-num" data-target="10">0</div>
+      <div class="why-badge-label">Years of<br>Excellence</div>
+    </div>
+  </div>
+  <div class="why-content reveal reveal-d1">
+    <div class="eyebrow">Why Car Hub</div>
+    <h2 class="sec-title">THE HUB<br>ADVANTAGE</h2>
+    <div class="why-features">
+      <div class="why-feat">
+        <div class="wf-icon">🔍</div>
+        <div class="wf-content">
+          <h3>150-Point Inspection</h3>
+          <p>Every car is rigorously inspected by our certified mechanics before it goes on sale. Zero hidden issues, zero surprises.</p>
         </div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">📋</div>
-        <div class="feature-text">
-          <h3>Full History Report</h3>
-          <p>Complete documentation, accident history, service records, and legal status for every car in our inventory.</p>
+      <div class="why-feat">
+        <div class="wf-icon">📄</div>
+        <div class="wf-content">
+          <h3>Full Transparency</h3>
+          <p>Complete accident history, service records, ownership documentation — all provided upfront with every vehicle.</p>
         </div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">🤝</div>
-        <div class="feature-text">
-          <h3>White-Glove Service</h3>
-          <p>From negotiation to delivery, our team handles everything. Test drives available at your location in Casablanca.</p>
+      <div class="why-feat">
+        <div class="wf-icon">💳</div>
+        <div class="wf-content">
+          <h3>Flexible Financing</h3>
+          <p>Get pre-approved in 24 hours through our banking partners. Tailored payment plans that work for your situation.</p>
         </div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">💳</div>
-        <div class="feature-text">
-          <h3>Financing Options</h3>
-          <p>Flexible credit solutions through our banking partners. Get pre-approved in 24 hours.</p>
+      <div class="why-feat">
+        <div class="wf-icon">📦</div>
+        <div class="wf-content">
+          <h3>Nationwide Delivery</h3>
+          <p>Based in Casablanca, we deliver anywhere in Morocco. White-glove handover with full paperwork included.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- NUMBERS -->
+<div class="numbers">
+  <div class="numbers-grid">
+    <div class="number-item reveal">
+      <div class="num-value"><span class="counter" data-target="200">0</span><span>+</span></div>
+      <div class="num-label">Cars in Stock</div>
+    </div>
+    <div class="number-item reveal reveal-d1">
+      <div class="num-value"><span class="counter" data-target="1400">0</span><span>+</span></div>
+      <div class="num-label">Happy Clients</div>
+    </div>
+    <div class="number-item reveal reveal-d2">
+      <div class="num-value"><span class="counter" data-target="10">0</span><span>+</span></div>
+      <div class="num-label">Years Experience</div>
+    </div>
+    <div class="number-item reveal reveal-d3">
+      <div class="num-value"><span class="counter" data-target="48">0</span><span>h</span></div>
+      <div class="num-label">Avg. Delivery Time</div>
+    </div>
+  </div>
+</div>
 
 <!-- TESTIMONIALS -->
-<section class="testimonials-section" id="testimonials">
-  <div class="reveal" style="text-align:center;margin-bottom:0;">
-    <div class="section-eyebrow" style="justify-content:center;">
-      <span>Client Stories</span>
-    </div>
-    <h2 class="section-title" style="text-align:center;">WHAT THEY<br>SAY ABOUT US</h2>
+<section class="testimonials reveal" id="testimonials">
+  <div class="section-head" style="justify-content:center;text-align:center;flex-direction:column;align-items:center">
+    <div class="eyebrow" style="justify-content:center">Client Stories</div>
+    <h2 class="sec-title">WHAT THEY SAY</h2>
   </div>
-  <div class="testimonials-grid">
-    <div class="testimonial reveal">
-      <p class="testimonial-text">Found my dream BMW M4 in perfect condition. The team was professional, transparent about the vehicle history, and made the whole process incredibly smooth. Highly recommend Car Hub MA.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">YB</div>
-        <div>
-          <div class="testimonial-name">Yassine Benchekroun</div>
-          <div class="testimonial-city">Casablanca</div>
-        </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Found my dream BMW M4 in perfect condition. The team was completely transparent about the vehicle history, and the whole purchase was done in 2 days. Exceptional service.</p>
+      <div class="testi-author">
+        <div class="testi-av">YB</div>
+        <div><div class="testi-name">Yassine Benchekroun</div><div class="testi-loc">Casablanca</div></div>
       </div>
     </div>
-    <div class="testimonial reveal reveal-delay-1">
-      <p class="testimonial-text">Sold my Mercedes in 48 hours at a great price. The evaluation was fair, paperwork was handled entirely by their team. Best car selling experience I've had in Morocco.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">SE</div>
-        <div>
-          <div class="testimonial-name">Sara El Fassi</div>
-          <div class="testimonial-city">Rabat</div>
-        </div>
+    <div class="testi-card reveal reveal-d1">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Sold my Mercedes GLE in under 48 hours at a fair market price. No hidden fees, no games. The Car Hub team handled all the paperwork seamlessly. Will definitely come back.</p>
+      <div class="testi-author">
+        <div class="testi-av">SE</div>
+        <div><div class="testi-name">Sara El Fassi</div><div class="testi-loc">Rabat</div></div>
       </div>
     </div>
-    <div class="testimonial reveal reveal-delay-2">
-      <p class="testimonial-text">The Range Rover I purchased was exactly as described. No hidden issues, no surprises. The team even helped me arrange insurance. Car Hub is the most trustworthy dealer in Casablanca.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">KO</div>
-        <div>
-          <div class="testimonial-name">Karim Ouahbi</div>
-          <div class="testimonial-city">Marrakech</div>
-        </div>
+    <div class="testi-card reveal reveal-d2">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">The Range Rover was exactly as described — zero issues, clean history. They even connected me with an insurance broker. Most professional car dealer I've dealt with in Morocco.</p>
+      <div class="testi-author">
+        <div class="testi-av">KO</div>
+        <div><div class="testi-name">Karim Ouahbi</div><div class="testi-loc">Marrakech</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA BAND -->
-<div class="cta-band reveal" id="contact">
-  <div class="cta-band-title">READY TO<br>FIND YOUR<br>NEXT CAR?</div>
-  <div class="cta-band-actions">
-    <a href="https://wa.me/212600000000" class="btn-dark">WhatsApp Us</a>
-    <a href="#inventory" class="btn-outline-dark">View Inventory</a>
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="cta-bg"></div>
+  <div class="cta-inner reveal">
+    <div class="cta-tag"><span>🟠 We're Online Now</span></div>
+    <h2 class="cta-title">READY TO<br>FIND YOUR<br><em>DREAM CAR?</em></h2>
+    <p class="cta-sub">Browse over 200 certified vehicles or tell us what you're looking for — our team responds within the hour.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/212600000000" class="btn-fill">
+        WhatsApp Us
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="#inventory" class="btn-outline">Browse Inventory</a>
+    </div>
+    <div class="cta-phone">
+      <span>Or call us:</span>
+      <a href="tel:+212600000000">+212 6 00 00 00 00</a>
+      <span>· Mon–Sat 9h–19h</span>
+    </div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="#" class="logo">CAR<span>HUB</span>.MA</a>
-      <p class="footer-desc">Morocco's trusted destination for premium and luxury vehicles. Based in Casablanca, serving the entire country.</p>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/car.hub.ma/" class="social-btn" title="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  <div class="footer-top">
+    <div>
+      <a href="#" class="footer-logo">CAR<span>HUB</span>.MA</a>
+      <p class="footer-about">Morocco's most trusted premium car dealer. Based in Casablanca, serving the entire country since 2015.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/car.hub.ma/" class="soc-btn" title="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         </a>
-        <a href="https://wa.me/212600000000" class="social-btn" title="WhatsApp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <a href="https://wa.me/212600000000" class="soc-btn" title="WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         </a>
-        <a href="https://www.facebook.com/" class="social-btn" title="Facebook">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <a href="https://www.facebook.com/" class="soc-btn" title="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
       </div>
     </div>
     <div class="footer-col">
-      <h4>Inventory</h4>
+      <div class="footer-col-title">Inventory</div>
       <ul>
         <li><a href="#">SUVs & 4x4</a></li>
         <li><a href="#">Luxury Sedans</a></li>
         <li><a href="#">Sports Cars</a></li>
         <li><a href="#">Electric Vehicles</a></li>
-        <li><a href="#">Budget Under 300K</a></li>
+        <li><a href="#">Under 300K MAD</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Services</h4>
+      <div class="footer-col-title">Services</div>
       <ul>
         <li><a href="#">Buy a Car</a></li>
         <li><a href="#">Sell Your Car</a></li>
@@ -1350,82 +935,153 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Contact</h4>
+      <div class="footer-col-title">Contact</div>
       <ul>
         <li><a href="#">📍 Casablanca, Maroc</a></li>
-        <li><a href="tel:+212600000000">📞 +212 600 000 000</a></li>
-        <li><a href="/cdn-cgi/l/email-protection#53303c3d27323027133032213b26317d3e32">✉ <span class="__cf_email__" data-cfemail="c8aba7a6bca9abbc88aba9baa0bdaae6a5a9">[email&#160;protected]</span></a></li>
-        <li><a href="#">Mon–Sat 9am–7pm</a></li>
+        <li><a href="tel:+212600000000">📞 +212 6 00 00 00 00</a></li>
+        <li><a href="mailto:contact@carhub.ma">✉ contact@carhub.ma</a></li>
+        <li><a href="#">🕐 Mon–Sat 9h–19h</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2026 CarHub.ma — All rights reserved</span>
-    <span class="footer-copy">Premium Auto Dealer · Casablanca, Maroc</span>
+    <span class="footer-copy">© 2026 CarHub.ma · All rights reserved · Casablanca, Maroc</span>
+    <span class="footer-made">Premium Auto Dealer</span>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Hamburger menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobileNav');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileNav.classList.toggle('open');
-    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
-  });
-  document.querySelectorAll('.mobile-link').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileNav.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
+<script>
+// ====== CURSOR ======
+const cur = document.getElementById('cur');
+const curRing = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=(mx-4)+'px'; cur.style.top=(my-4)+'px';
+});
+(function animCur(){
+  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+  curRing.style.left=(rx-16)+'px'; curRing.style.top=(ry-16)+'px';
+  requestAnimationFrame(animCur);
+})();
+document.querySelectorAll('a,button,.ftab,.car-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+});
 
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx - 5 + 'px';
-    cursor.style.top = my - 5 + 'px';
-  });
-
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx - 18 + 'px';
-    ring.style.top = ry - 18 + 'px';
-    requestAnimationFrame(animRing);
+// ====== HERO CANVAS PARTICLES ======
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let particles=[];
+function resizeCanvas(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+class Particle{
+  constructor(){this.reset()}
+  reset(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.size=Math.random()*1.5+.3;
+    this.speedX=(Math.random()-.5)*.3;
+    this.speedY=-Math.random()*.4-.1;
+    this.opacity=Math.random()*.5+.1;
+    this.life=0; this.maxLife=Math.random()*200+100;
   }
-  animRing();
-
-  // Hover effects on interactive elements
-  document.querySelectorAll('a, button, .filter-tab').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'scale(2.5)';
-      ring.style.transform = 'scale(1.5)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'scale(1)';
-      ring.style.transform = 'scale(1)';
-    });
-  });
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
+  update(){
+    this.x+=this.speedX; this.y+=this.speedY; this.life++;
+    if(this.life>this.maxLife||this.y<0)this.reset();
+  }
+  draw(){
+    const progress=this.life/this.maxLife;
+    const fade=progress<.1?progress/.1:progress>.8?(1-progress)/.2:1;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,${85+Math.random()*40},0,${this.opacity*fade})`;
+    ctx.fill();
+  }
+}
+for(let i=0;i<120;i++){particles.push(new Particle());particles[i].life=Math.random()*particles[i].maxLife;}
+function animParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // Draw connection lines
+  ctx.strokeStyle='rgba(255,85,0,0.03)';
+  ctx.lineWidth=1;
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<100){
+        ctx.globalAlpha=(1-dist/100)*0.15;
+        ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();
       }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(r => observer.observe(r));
+    }
+  }
+  ctx.globalAlpha=1;
+  particles.forEach(p=>{p.update();p.draw()});
+  requestAnimationFrame(animParticles);
+}
+animParticles();
 
-  // Filter tabs
-  document.querySelectorAll('.filter-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.filter-tab').
+// ====== NAV SCROLL ======
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// ====== HAMBURGER ======
+const ham=document.getElementById('hamburger');
+const mobNav=document.getElementById('mobNav');
+ham.addEventListener('click',()=>{
+  ham.classList.toggle('open');
+  mobNav.classList.toggle('open');
+  document.body.style.overflow=mobNav.classList.contains('open')?'hidden':'';
+});
+document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',()=>{
+  ham.classList.remove('open');mobNav.classList.remove('open');document.body.style.overflow='';
+}));
+
+// ====== SCROLL REVEAL ======
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// ====== ANIMATED COUNTERS ======
+function animCounter(el){
+  const target=parseInt(el.dataset.target);
+  const dur=1800;
+  const start=performance.now();
+  function tick(now){
+    const elapsed=now-start;
+    const progress=Math.min(elapsed/dur,1);
+    const ease=1-Math.pow(1-progress,3);
+    el.textContent=Math.floor(ease*target);
+    if(progress<1)requestAnimationFrame(tick);
+    else el.textContent=target;
+  }
+  requestAnimationFrame(tick);
+}
+const counterObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-target]').forEach(animCounter);
+      counterObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.hero-left,.numbers,.why-visual').forEach(el=>counterObs.observe(el));
+
+// ====== FILTER TABS ======
+document.querySelectorAll('.ftab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+
+// ====== TICKER DUPLICATE ======
+const tt=document.getElementById('tickerTrack');
+tt.innerHTML+=tt.innerHTML;
+</script>
+</body>
+</html>
